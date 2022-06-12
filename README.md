@@ -1,6 +1,6 @@
 # tf-calibre-web
 
-Terraform deployment for Calibre Web on ECS Fargate
+Terraform deployment for Calibre Web on ECS Fargate.
 
 ## Calibre database init
 
