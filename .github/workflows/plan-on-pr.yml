@@ -34,7 +34,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@master
         with:
           role-to-assume: arn:aws:iam::423779874966:role/GitHubAction
           aws-region: eu-west-1
