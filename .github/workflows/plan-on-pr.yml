@@ -101,7 +101,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: "github-actions[bot]"
           message: |
-            Plan failed for **${{ matrix.path }}**:
+            Plan failed:
 
             ```
             ${{ steps.plan.outputs.stderr }}
@@ -114,7 +114,7 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           repo-token-user-login: "github-actions[bot]"
           message: |
-            Apply failed for **${{ matrix.path }}**:
+            Apply failed:
 
             ```
             ${{ steps.apply.outputs.stderr }}
