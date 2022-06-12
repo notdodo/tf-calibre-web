@@ -75,6 +75,12 @@ resource "aws_ecs_task_definition" "main" {
 
 resource "aws_ecs_cluster" "main" {
   name = "${var.name}-cluster-${var.environment}"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
+}
+
   tags = {
     Name = "${var.name}-cluster-${var.environment}"
   }
