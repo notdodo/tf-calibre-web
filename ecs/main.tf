@@ -79,7 +79,6 @@ resource "aws_ecs_cluster" "main" {
     name  = "containerInsights"
     value = "enabled"
   }
-}
 
   tags = {
     Name = "${var.name}-cluster-${var.environment}"
