@@ -9,6 +9,7 @@ resource "aws_lb" "main" {
 
   tags = {
     Name = "${var.name}-alb-${var.environment}"
+    public = true
   }
 
   lifecycle {
