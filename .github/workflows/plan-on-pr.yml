@@ -17,7 +17,7 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Run terraform fmt check
-        run: terraform fmt -check -diff -recursive ./terraform
+        run: terraform fmt -check -diff -recursive
   
   plan_and_apply:
     name: Plan and Apply
