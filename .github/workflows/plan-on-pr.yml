@@ -26,11 +26,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        path:
-          - dev
-          - stage
-          - prod
 
     steps:
       - name: Check out code
@@ -48,14 +43,12 @@ jobs:
 
       - name: Initialize Terraform
         run: |
-          cd terraform/${{ matrix.path }}
           terraform init -input=false          
 
       - name: Plan Terraform
         id: plan
         continue-on-error: true
         run: |
-          cd terraform/${{ matrix.path }}
           terraform plan -input=false -no-color -out=tfplan \
           && terraform show -no-color tfplan          
 
@@ -81,7 +74,6 @@ jobs:
         id: apply
         continue-on-error: true
         run: |
-          cd terraform/${{ matrix.path }}
           terraform apply \
             -input=false \
             -no-color \
