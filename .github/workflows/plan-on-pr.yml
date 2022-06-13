@@ -23,7 +23,21 @@ jobs:
         uses: hashicorp/setup-terraform@v2
 
       - name: Run terraform fmt check
+        id: fmtcheck
         run: terraform fmt -check -diff -recursive
+        
+      - name: Post FMT check
+        if: steps.fmtcheck.outcome != 'success'
+        uses: mshick/add-pr-comment@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token-user-login: "github-actions[bot]"
+          message: |
+            Please format you code:
+
+            ```diff
+            ${{ steps.fmtcheck.outputs.stdout }}
+            ```
 
   plan_and_apply:
     name: Plan and Apply
@@ -70,18 +84,8 @@ jobs:
           echo "$PLAN" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
 
-      - name: Apply Terraform
-        if: steps.plan.outcome == 'success'
-        id: apply
-        continue-on-error: true
-        run: |
-          terraform apply \
-            -input=false \
-            -no-color \
-            tfplan
-
       - name: Post Plan and Apply to GitHub PR
-        if: steps.plan.outcome == 'success' && steps.apply.outcome == 'success'
+        if: steps.plan.outcome == 'success'
         uses: mshick/add-pr-comment@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
@@ -91,10 +95,6 @@ jobs:
 
             ```diff
             ${{ env.PLAN }}
-            ```
-
-            ```
-            ${{ steps.apply.outputs.stdout }}
             ```
 
       - name: Post Plan Failure
@@ -108,17 +108,4 @@ jobs:
 
             ```
             ${{ steps.plan.outputs.stderr }}
-            ```
-
-      - name: Post Apply Failure
-        if: steps.apply.outcome == 'failure'
-        uses: mshick/add-pr-comment@v1
-        with:
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          repo-token-user-login: "github-actions[bot]"
-          message: |
-            Apply failed:
-
-            ```
-            ${{ steps.apply.outputs.stderr }}
             ```
