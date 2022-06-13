@@ -1,6 +1,6 @@
 # tf-calibre-web
 
-Terraform deployment for Calibre Web
+Terraform deployment for Calibre Web.
 
 ## Calibre database init
 
