@@ -1,4 +1,4 @@
-name: Plan / Test On PR
+name: Lint and TF plan on PR
 
 on:
   pull_request:
