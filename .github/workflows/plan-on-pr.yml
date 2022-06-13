@@ -41,7 +41,6 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::423779874966:role/GitHubAction
           aws-region: eu-west-1
-      - run: aws sts get-caller-identity
 
       - name: Initialize Terraform
         run: |
