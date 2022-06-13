@@ -1,5 +1,7 @@
 # tf-calibre-web
 
+[![Lint and TF plan on PR](https://github.com/notdodo/tf-calibre-web/actions/workflows/plan-on-pr.yml/badge.svg)](https://github.com/notdodo/tf-calibre-web/actions/workflows/plan-on-pr.yml) [![Terraform Apply on Push](https://github.com/notdodo/tf-calibre-web/actions/workflows/tfapply.yml/badge.svg)](https://github.com/notdodo/tf-calibre-web/actions/workflows/tfapply.yml) [![tfsec](https://github.com/notdodo/tf-calibre-web/actions/workflows/tfsec.yml/badge.svg)](https://github.com/notdodo/tf-calibre-web/actions/workflows/tfsec.yml)
+
 Terraform deployment for Calibre Web.
 
 ## Calibre database init
