@@ -1,0 +1,50 @@
+name: Terraform Apply on Push
+
+on:
+  push:
+    branches:
+      - main
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  apply:
+    name: Terraform Apply
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::423779874966:role/GitHubAction
+          aws-region: eu-west-1
+
+      - name: Initialize Terraform
+        run: |
+          terraform init -input=false
+      
+      - name: Plan Terraform
+        id: plan
+        continue-on-error: true
+        run: |
+          terraform plan -input=false -no-color -out=tfplan \
+          && terraform show -no-color tfplan
+          
+      - name: Apply Terraform
+        if: steps.plan.outcome == 'success'
+        id: apply
+        continue-on-error: true
+        run: |
+          terraform apply \
+            -input=false \
+            -no-color \
+            tfplan
