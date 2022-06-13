@@ -8,7 +8,8 @@ resource "aws_lb" "main" {
   enable_deletion_protection = true
 
   tags = {
-    Name = "${var.name}-alb-${var.environment}"
+    Name   = "${var.name}-alb-${var.environment}"
+    Public = "true"
   }
 
   lifecycle {
