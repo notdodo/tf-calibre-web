@@ -3,12 +3,36 @@ resource "aws_security_group" "alb_sg" {
   vpc_id = var.vpc_id
   # description = "Allow inbound Traffic from Internet to the container port on ECS cluster"
   ingress {
-    description      = "TCP from exposed ALB port 80"
-    protocol         = "tcp"
-    from_port        = 80
-    to_port          = 80
-    cidr_blocks      = ["0.0.0.0/0"] // TODO: cloudflare
-    ipv6_cidr_blocks = ["::/0"]
+    description = "TCP from Cloudflare to exposed ALB port 80"
+    protocol    = "tcp"
+    from_port   = 80
+    to_port     = 80
+    cidr_blocks = [
+      "103.21.244.0/22",
+      "103.22.200.0/22",
+      "103.31.4.0/22",
+      "104.16.0.0/13",
+      "104.24.0.0/14",
+      "108.162.192.0/18",
+      "131.0.72.0/22",
+      "141.101.64.0/18",
+      "162.158.0.0/15",
+      "172.64.0.0/13",
+      "173.245.48.0/20",
+      "188.114.96.0/20",
+      "190.93.240.0/20",
+      "197.234.240.0/22",
+      "198.41.128.0/17"
+    ]
+    ipv6_cidr_blocks = [
+      "2400:cb00::/32",
+      "2606:4700::/32",
+      "2803:f800::/32",
+      "2405:b500::/32",
+      "2405:8100::/32",
+      "2a06:98c0::/29",
+      "2c0f:f248::/32"
+    ]
   }
 
   egress {
