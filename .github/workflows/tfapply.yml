@@ -42,7 +42,7 @@ jobs:
       - name: Apply Terraform
         if: steps.plan.outcome == 'success'
         id: apply
-        continue-on-error: true
+        continue-on-error: false
         run: |
           terraform apply \
             -input=false \
