@@ -5,6 +5,7 @@ module "iam" {
 module "vpc" {
   source             = "./vpc"
   name               = var.name
+  region             = var.aws-region
   cidr               = var.cidr
   private_subnets    = var.private_subnets
   public_subnets     = var.public_subnets

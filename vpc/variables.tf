@@ -6,6 +6,10 @@ variable "environment" {
   description = "the name of the environment, e.g. \"prod\""
 }
 
+variable "region" {
+  description = "the AWS region in which resources are created"
+}
+
 variable "cidr" {
   description = "The CIDR block for the VPC."
 }
