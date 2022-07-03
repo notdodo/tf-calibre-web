@@ -11,3 +11,7 @@ Terraform deployment for Calibre Web.
 3. Create the `/config` and `/books` folders inside the mounted EFS volume
 4. Give open permissions to the two folder `chmod 777 -R /config` and `chmod 777 -R /books` (calibre-web will take care to set the correct permissions on provisioning)
 5. Import you old Calibre database or the empty one inside `/books`
+
+### Costs
+
+The daily costs with low or no traffic is ~0.79 $
