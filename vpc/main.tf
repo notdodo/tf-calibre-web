@@ -15,22 +15,10 @@ resource "aws_vpc" "main" {
 resource "aws_internet_gateway" "main" {
   vpc_id = aws_vpc.main.id
 
-
   tags = {
     Name = "${var.name}-igw-${var.environment}"
   }
 }
-
-# resource "aws_nat_gateway" "main" {
-#   count         = length(var.private_subnets)
-#   allocation_id = element(aws_eip.nat.*.id, count.index)
-#   subnet_id     = element(aws_subnet.public.*.id, count.index)
-#   depends_on    = [aws_internet_gateway.main]
-
-#   tags = {
-#     Name = "${var.name}-nat-${var.environment}-${format("%03d", count.index + 1)}"
-#   }
-# }
 
 resource "aws_eip" "nat" {
   count = length(var.private_subnets)
@@ -87,19 +75,10 @@ resource "aws_route_table" "private" {
   }
 }
 
-# resource "aws_route" "private" {
-#   count                  = length(compact(var.private_subnets))
-#   route_table_id         = element(aws_route_table.private.*.id, count.index)
-#   destination_cidr_block = "0.0.0.0/0"
-# nat_gateway_id         = element(aws_nat_gateway.main.*.id, count.index)
-# }
-
 resource "aws_vpc_endpoint" "ecs" {
   vpc_id            = aws_vpc.main.id
   service_name      = "com.amazonaws.${var.region}.ecs"
   vpc_endpoint_type = "Interface"
-
-  # route_table_ids = aws_route_table.private.*.id
 
   tags = {
     Name = "${var.name}-vpc-endpoint-${var.environment}"
