@@ -83,7 +83,6 @@ resource "aws_vpc_endpoint" "ecs" {
   tags = {
     Name = "${var.name}-vpc-endpoint-${var.environment}"
   }
-
 }
 
 resource "aws_route_table_association" "private" {
