@@ -17,7 +17,7 @@ module "vpc" {
 module "security_groups" {
   source          = "./security_groups"
   name            = var.name
-  vpc_id          = module.vpc.id
+  vpc_id          = module.vpc.vpc_id
   environment     = var.environment
   container_port  = var.container_port
   private_subnets = var.private_subnets
@@ -27,7 +27,7 @@ module "security_groups" {
 module "alb" {
   source              = "./alb"
   name                = var.name
-  vpc_id              = module.vpc.id
+  vpc_id              = module.vpc.vpc_id
   subnets             = module.vpc.public_subnets
   environment         = var.environment
   alb_security_groups = [module.security_groups.alb_sg]
