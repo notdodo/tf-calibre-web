@@ -6,12 +6,8 @@ variable "environment" {
   description = "the name of the environment, e.g. \"prod\""
 }
 
-variable "private_subnets" {
-  description = "Comma separated list of private subnets IDs"
-}
-
-variable "subnets_count" {
-  description = "Number of private subnets"
+variable "public_subnets" {
+  description = "Comma separated list of public subnets IDs"
 }
 
 variable "efs_security_groups" {

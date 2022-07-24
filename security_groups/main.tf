@@ -40,7 +40,7 @@ resource "aws_security_group" "alb_sg" {
     protocol    = "tcp"
     from_port   = var.container_port
     to_port     = var.container_port
-    cidr_blocks = var.private_subnets
+    cidr_blocks = var.public_subnets
   }
 
   tags = {
@@ -93,7 +93,7 @@ resource "aws_security_group" "ecs_tasks_sg" {
     protocol    = "tcp"
     from_port   = 2049
     to_port     = 2049
-    cidr_blocks = var.private_subnets
+    cidr_blocks = var.public_subnets
   }
 
   tags = {

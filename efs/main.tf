@@ -66,10 +66,6 @@ resource "aws_iam_role_policy" "efs_access" {
 
 resource "aws_efs_access_point" "efs_ap_config" {
   file_system_id = aws_efs_file_system.efs_calibre_web.id
-  posix_user {
-    gid = 1000
-    uid = 1000
-  }
 
   root_directory {
     path = "/config"
@@ -82,10 +78,7 @@ resource "aws_efs_access_point" "efs_ap_config" {
 
 resource "aws_efs_access_point" "efs_ap_books" {
   file_system_id = aws_efs_file_system.efs_calibre_web.id
-  posix_user {
-    gid = 1000
-    uid = 1000
-  }
+
   root_directory {
     path = "/books"
   }
@@ -96,9 +89,9 @@ resource "aws_efs_access_point" "efs_ap_books" {
 }
 
 resource "aws_efs_mount_target" "efs_mount_target_config" {
-  count           = var.subnets_count
+  count           = length(var.public_subnets)
   file_system_id  = aws_efs_file_system.efs_calibre_web.id
-  subnet_id       = element(var.private_subnets.*.id, count.index)
+  subnet_id       = element(var.public_subnets.*.id, count.index)
   security_groups = var.efs_security_groups
 }
 

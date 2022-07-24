@@ -8,20 +8,18 @@ module "vpc" {
   name               = var.name
   region             = var.aws-region
   cidr               = var.cidr
-  private_subnets    = var.private_subnets
   public_subnets     = var.public_subnets
   availability_zones = var.availability_zones
   environment        = var.environment
 }
 
 module "security_groups" {
-  source          = "./security_groups"
-  name            = var.name
-  vpc_id          = module.vpc.vpc_id
-  environment     = var.environment
-  container_port  = var.container_port
-  private_subnets = var.private_subnets
-  public_subnets  = var.public_subnets
+  source         = "./security_groups"
+  name           = var.name
+  vpc_id         = module.vpc.vpc_id
+  environment    = var.environment
+  container_port = var.container_port
+  public_subnets = var.public_subnets
 }
 
 module "alb" {
@@ -38,8 +36,7 @@ module "efs" {
   source                   = "./efs"
   name                     = var.name
   environment              = var.environment
-  private_subnets          = module.vpc.private_subnets
-  subnets_count            = length(module.vpc.private_subnets)
+  public_subnets           = module.vpc.public_subnets
   efs_security_groups      = [module.security_groups.efs_sg]
   iam_efs_role_name        = module.iam.ecs_task_role_name
   iam_efs_role_arn         = module.iam.ecs_task_role_arn
@@ -51,7 +48,7 @@ module "ecs" {
   name                        = var.name
   environment                 = var.environment
   region                      = var.aws-region
-  subnets                     = module.vpc.private_subnets
+  subnets                     = module.vpc.public_subnets
   aws_alb_target_group_arn    = module.alb.aws_alb_target_group_arn
   ecs_service_security_groups = [module.security_groups.ecs_tasks_sg]
   container_port              = var.container_port
